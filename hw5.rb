@@ -10,7 +10,8 @@ p = ChunkyPNG::Image.from_io(StringIO.new(i.to_blob))
 count = 0
 #p[0, 0] = ChunkyPNG::Color.rgba(255, 0,0, 128)
 
-green_values = Array.new(8, 0)
+ #Array.new(8, 0)
+vector = Array.new(512, 0)
 
 p.height.times do |y|
   p.width.times do |x|
@@ -25,9 +26,10 @@ p.height.times do |y|
     blue = ChunkyPNG::Color.b(iter)
     blue_index = (blue / 32)
 
-    
+    vector_index = (red_index * 8 * 8) + (green_index * 8) + blue_index
+    vector[vector_index] = vector[vector_index] + 1
     #green_values[green_index] = green_values[green_index] + 1
   end
 end
 
-puts green_values
+puts vector
