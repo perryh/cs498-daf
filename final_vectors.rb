@@ -2,7 +2,7 @@ require 'mini_magick'
 require 'chunky_png'
 
 Dir.foreach(ARGV[0]) do |img_file|
-  if(img_file == '.' || img_file == '..') then
+  if(img_file == '.' || img_file == '..' || img_file == '.DS_Store') then
       next
   end
   i = MiniMagick::Image.open("#{ARGV[0]}/#{img_file}")
@@ -16,13 +16,13 @@ Dir.foreach(ARGV[0]) do |img_file|
 
    #Array.new(8, 0)
   vector = Array.new(512, 0)
-  height_scale = p.height / 20
-  width_scale = p.width / 20
-  for y2 in 0..20
-    for x2 in 0..20
+  height_scale = p.height / 21
+  width_scale = p.width / 21
+  for y2 in 0..19
+    for x2 in 0..19
       vector = Array.new(512, 0)
-      for y in y2..(y2 + height_scale)
-        for x in x2..(x2 + width_scale)
+      for y in (y2*height_scale)..((y2*height_scale) + height_scale)
+        for x in (x2*width_scale)..((x2*width_scale) + width_scale)
           iter = p[x, y]
           #puts "#{ChunkyPNG::Color.r(iter).to_s} #{ChunkyPNG::Color.g(iter).to_s} #{ChunkyPNG::Color.b(iter).to_s}" #+ " at " + x.to_s + "," + y.to_s   
           red = ChunkyPNG::Color.r(iter)
